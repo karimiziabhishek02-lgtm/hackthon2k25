@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Finance Manager - AI-Powered Financial Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span>FinanceAI</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+                <li><a href="#expenses" class="nav-link">Expenses</a></li>
+                <li><a href="#goals" class="nav-link">Goals</a></li>
+                <li><a href="#analytics" class="nav-link">Analytics</a></li>
+                <li><a href="#profile" class="nav-link">Profile</a></li>
+            </ul>
+            <div class="nav-controls">
+                <button id="themeToggle" class="theme-toggle" title="Toggle Dark Mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="exportData" class="export-btn" title="Export Data">
+                    <i class="fas fa-download"></i>
+                </button>
+                <div class="notification-bell" id="notificationBell">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-count" id="notificationCount">3</span>
+                </div>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Quick Actions</h3>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#add-expense"><i class="fas fa-plus"></i> Add Expense</a></li>
+                <li><a href="#set-budget"><i class="fas fa-target"></i> Set Budget</a></li>
+                <li><a href="#create-goal"><i class="fas fa-flag"></i> Create Goal</a></li>
+                <li><a href="#ai-insights"><i class="fas fa-brain"></i> AI Insights</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="section-header">
+                    <h2>Financial Dashboard</h2>
+                    <div class="date-range">
+                        <select id="timeRange">
+                            <option value="week">This Week</option>
+                            <option value="month" selected>This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Financial Overview Cards -->
+                <div class="cards-grid">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            <h3>Current Balance</h3>
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="amount" id="currentBalance">₹12,450</div>
+                            <div class="change positive">+5.2% from last month</div>
+                        </div>
+                    </div>
+
+                    <div class="card expense-card">
+                        <div class="card-header">
+                            <h3>Monthly Expenses</h3>
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="amount" id="monthlyExpenses">₹8,750</div>
+                            <div class="change negative">+12% from last month</div>
+                        </div>
+                    </div>
+
+                    <div class="card savings-card">
+                        <div class="card-header">
+                            <h3>Savings Goal</h3>
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="amount" id="savingsProgress">₹3,700 / ₹5,000</div>
+                            <div class="progress-bar">
+                                <div class="progress" style="width: 74%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card budget-card">
+                        <div class="card-header">
+                            <h3>Budget Status</h3>
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <div class="card-content">
+                            <div class="amount" id="budgetRemaining">₹1,250 left</div>
+                            <div class="change warning">Budget Alert Active</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <h3>Spending Trends</h3>
+                        <canvas id="spendingChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Expense Categories</h3>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- AI Insights Panel -->
+                <div class="ai-insights-panel">
+                    <h3><i class="fas fa-brain"></i> AI Financial Insights</h3>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div>
+                                <h4>Spending Alert</h4>
+                                <p>You're spending 15% more on food this month. Consider meal planning to save ₹500.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <div>
+                                <h4>Savings Opportunity</h4>
+                                <p>Based on your pattern, you can save an extra ₹800 by reducing entertainment expenses.</p>
+                            </div>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h4>Prediction</h4>
+                                <p>At current spending rate, you'll exceed your monthly budget by ₹300.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Expenses Section -->
+            <section id="expenses" class="section">
+                <div class="section-header">
+                    <h2>Expense Management</h2>
+                    <button class="btn-primary" onclick="openExpenseModal()">
+                        <i class="fas fa-plus"></i> Add Expense
+                    </button>
+                </div>
+
+                <!-- Expense Filters -->
+                <div class="filters">
+                    <select id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="transport">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="education">Education</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="utilities">Utilities</option>
+                    </select>
+                    <input type="date" id="dateFilter">
+                    <input type="text" id="searchExpense" placeholder="Search expenses...">
+                </div>
+
+                <!-- Expenses List -->
+                <div class="expenses-list" id="expensesList">
+                    <!-- Expenses will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Goals Section -->
+            <section id="goals" class="section">
+                <div class="section-header">
+                    <h2>Financial Goals</h2>
+                    <button class="btn-primary" onclick="openGoalModal()">
+                        <i class="fas fa-plus"></i> Create Goal
+                    </button>
+                </div>
+
+                <div class="goals-grid" id="goalsGrid">
+                    <!-- Goals will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <div class="section-header">
+                    <h2>Predictive Analytics</h2>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="analytics-card">
+                        <h3>Spending Prediction</h3>
+                        <canvas id="predictionChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Budget vs Actual</h3>
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Savings Forecast</h3>
+                        <canvas id="savingsChart"></canvas>
+                    </div>
+                    <div class="analytics-card">
+                        <h3>Category Trends</h3>
+                        <canvas id="trendsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Expense Modal -->
+    <div id="expenseModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Expense</h3>
+                <span class="close" onclick="closeModal('expenseModal')">&times;</span>
+            </div>
+            <form id="expenseForm">
+                <div class="form-group">
+                    <label for="expenseAmount">Amount (₹)</label>
+                    <input type="number" id="expenseAmount" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDescription">Description</label>
+                    <input type="text" id="expenseDescription" required>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategory">Category</label>
+                    <select id="expenseCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="food">Food & Dining</option>
+                        <option value="transport">Transportation</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="education">Education</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="utilities">Utilities</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseDate">Date</label>
+                    <input type="date" id="expenseDate" required>
+                </div>
+                <div class="ai-suggestion">
+                    <p><i class="fas fa-brain"></i> AI Suggestion: <span id="aiCategorySuggestion">Based on description, this looks like a Food expense.</span></p>
+                </div>
+                <div class="form-group">
+                    <label for="expenseReceipt">Receipt (Optional)</label>
+                    <div class="file-upload-area" id="receiptUpload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <p>Drag & drop receipt or click to upload</p>
+                        <input type="file" id="expenseReceipt" accept="image/*" hidden>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('expenseModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Expense</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Goal Modal -->
+    <div id="goalModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Financial Goal</h3>
+                <span class="close" onclick="closeModal('goalModal')">&times;</span>
+            </div>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label for="goalName">Goal Name</label>
+                    <input type="text" id="goalName" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalAmount">Target Amount (₹)</label>
+                    <input type="number" id="goalAmount" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalDeadline">Target Date</label>
+                    <input type="date" id="goalDeadline" required>
+                </div>
+                <div class="form-group">
+                    <label for="goalCategory">Category</label>
+                    <select id="goalCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="emergency">Emergency Fund</option>
+                        <option value="education">Education</option>
+                        <option value="travel">Travel</option>
+                        <option value="gadget">Gadgets</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="ai-recommendation">
+                    <p><i class="fas fa-lightbulb"></i> AI Recommendation: <span id="aiGoalRecommendation">Save ₹500 per month to reach this goal comfortably.</span></p>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeModal('goalModal')">Cancel</button>
+                    <button type="submit" class="btn-primary">Create Goal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Budget Alert -->
+    <div id="budgetAlert" class="alert alert-warning">
+        <div class="alert-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Budget Alert: You've spent 85% of your monthly budget!</span>
+            <button class="alert-close" onclick="closeAlert()">&times;</button>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="notification-panel">
+        <div class="notification-header">
+            <h3>Notifications</h3>
+            <button class="close-notifications" onclick="closeNotifications()">&times;</button>
+        </div>
+        <div class="notification-list" id="notificationList">
+            <!-- Notifications will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing AI Analysis...</p>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="toast toast-success">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Action completed successfully!</span>
+    </div>
+
+    <!-- Voice Command Button -->
+    <button id="voiceCommand" class="voice-command-btn" title="Voice Command">
+        <i class="fas fa-microphone"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="enhanced-features.js"></script>
+</body>
+</html>
